@@ -117,12 +117,6 @@
         <version>${omnitureclick.version}</version>
         <scope>${omnitureclick.scope}</scope>
       </dependency>
-      <dependency>
-        <groupId>com.google.code.gson</groupId>
-        <artifactId>gson</artifactId>
-        <version>${gson.version}</version>
-        <scope>${gson.scope}</scope>
-      </dependency>
     </dependencies>
   </dependencyManagement>
 
@@ -142,10 +136,6 @@
     <dependency>
     <groupId>com.github.bartekdobija</groupId>
     <artifactId>omniture-clickstream</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.google.code.gson</groupId>
-      <artifactId>gson</artifactId>
     </dependency>
   </dependencies>
 

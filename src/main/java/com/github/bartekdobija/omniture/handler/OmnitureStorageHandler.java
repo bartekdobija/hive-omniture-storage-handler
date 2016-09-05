@@ -71,15 +71,6 @@ public class OmnitureStorageHandler
     return StringUtils.join(DATAFILE_SEPARATOR, paths);
   }
 
-  private String headerDefinitions(OmnitureMetadata meta)
-      throws MetadataException {
-    List<String> entries = new ArrayList<>();
-    for(Column c: meta.getHeader().getColumns()) {
-      entries.add(c.getName() + COLTYPE_SEPARATOR + c.getType());
-    }
-    return StringUtils.join(DATAFILE_SEPARATOR, entries);
-  }
-
   @Override
   public DecomposedPredicate decomposePredicate(JobConf jobConf,
                                                 Deserializer deserializer,

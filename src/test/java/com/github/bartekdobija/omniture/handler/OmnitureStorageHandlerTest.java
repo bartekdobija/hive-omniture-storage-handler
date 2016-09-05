@@ -34,13 +34,4 @@ public class OmnitureStorageHandlerTest {
     assertTrue(jobConf.get(INPUT_DIR).contains("02-suiteid"));
 
   }
-
-  @Test
-  public void manualConfigBasedInit() {
-    OmnitureStorageHandler handler = new OmnitureStorageHandler();
-
-    Properties props = new Properties();
-    //props.put(INPUT_DIR)
-  }
-
 }
