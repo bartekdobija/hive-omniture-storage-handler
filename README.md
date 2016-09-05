@@ -11,6 +11,15 @@ This is an early alpha version based on the [omniture-clickstream](https://githu
 hdfs://, s3:// and file:// schemes are supported
 
 ```sql
+
+-- optionally set Amazon S3 credentials
+SET system:aws.accessKeyId=<AWSAccessKey>;
+SET system:aws.secretKey=<AWSSecretKey>;
+
+-- optionally set S3 HTTP proxy configuration
+SET system:http.proxyHost=<HttpProxyHost>;
+SET system:http.proxyPort=<HttpProxyPort>;
+
 CREATE EXTERNAL TABLE omniture_table
 ROW FORMAT SERDE 'com.github.bartekdobija.omniture.serde.OmnitureSerDe'
 STORED BY 'com.github.bartekdobija.omniture.handler.OmnitureStorageHandler'

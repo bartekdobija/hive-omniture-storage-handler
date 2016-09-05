@@ -27,8 +27,6 @@ public class OmnitureStorageHandler
   public static final String METADATA_HEADER_KEY = "omniture.metadata.header";
   public static final String LOOKUP_TABLE_KEY = "omniture.metadata.lookuptable";
   public static final String DATA_FILES_KEY = "omniture.data.files";
-  public static final String LOOKUP_TABLE_SERIALIZER_KEY =
-      "omniture.metadata.lookuptable.serializer";
 
   public static final String DATAFILE_SEPARATOR = ",";
   public static final String COLTYPE_SEPARATOR = ":";

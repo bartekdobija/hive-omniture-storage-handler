@@ -27,7 +27,6 @@ import static com.github.bartekdobija.omniture.handler.OmnitureStorageHandler.*;
 public class OmnitureSerDe extends AbstractSerDe {
 
   private ObjectInspector inspector;
-  private LookupTableIndex lookup;
   private RowParser parser;
 
   public static final Log LOG = LogFactory.getLog(
@@ -44,6 +43,7 @@ public class OmnitureSerDe extends AbstractSerDe {
     String manifest = tblProps.getProperty(MANIFEST_FILE_KEY);
 
     List<Column> cols;
+    LookupTableIndex lookup;
     try {
       OmnitureMetadata meta = new OmnitureMetadataFactory().create(manifest);
       lookup = meta.getLookupTable().getIndex();
