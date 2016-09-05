@@ -21,3 +21,5 @@ TBLPROPERTIES (
 );
 ```
 This first version does not implement partition handling.
+
+[![Build Status](https://travis-ci.org/bartekdobija/hive-omniture-storage-handler.svg?branch=master)](https://travis-ci.org/bartekdobija/hive-omniture-storage-handler)
