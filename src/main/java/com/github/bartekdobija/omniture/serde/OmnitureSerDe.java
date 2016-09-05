@@ -7,6 +7,7 @@ import com.github.bartekdobija.omniture.row.RowParser;
 import com.github.bartekdobija.omniture.row.RowParserException;
 import com.github.bartekdobija.omniture.serde.utils.OmnitureSerDeUtils;
 import org.apache.commons.collections.IteratorUtils;
+import org.apache.commons.lang.NotImplementedException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.hadoop.conf.Configuration;
@@ -77,6 +78,8 @@ public class OmnitureSerDe extends AbstractSerDe {
   @Override
   public Writable serialize(Object o, ObjectInspector objectInspector)
       throws SerDeException {
+    new NotImplementedException(
+        "omniture table serialization is not supported");
     return null;
   }
 
