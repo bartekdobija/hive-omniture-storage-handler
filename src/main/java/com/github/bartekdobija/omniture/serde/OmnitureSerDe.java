@@ -18,9 +18,7 @@ import org.apache.hadoop.io.Text;
 import org.apache.hadoop.io.Writable;
 
 import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Properties;
+import java.util.*;
 
 import static com.github.bartekdobija.omniture.handler.OmnitureStorageHandler.*;
 
@@ -44,20 +42,53 @@ public class OmnitureSerDe extends AbstractSerDe {
 
     List<Column> cols;
     LookupTableIndex lookup;
-    try {
-      OmnitureMetadata meta = new OmnitureMetadataFactory().create(manifest);
-      lookup = meta.getLookupTable().getIndex();
-      cols = meta.getHeader().getColumns();
-    } catch (MetadataException e) {
-      throw new SerDeException(e);
-    }
+    List<String> colNames;
+    List<ObjectInspector> objInspectors;
+    if (manifest != null) {
+      try {
+        OmnitureMetadata meta = new OmnitureMetadataFactory().create(manifest);
+        if("false".equalsIgnoreCase(tblProps.getProperty(LOOKUP_ENABLED_KEY))) {
+          lookup = new LookupTableIndex(); //empty lookup table
+        } else {
+          lookup = meta.getLookupTable().getIndex();
+        }
+        cols = meta.getHeader().getColumns();
+      } catch (MetadataException e) {
+        throw new SerDeException(e);
+      }
 
-    List<String> colNames = new ArrayList<>(cols.size());
-    List<ObjectInspector> objInspectors = new ArrayList<>(cols.size());
+      colNames = new ArrayList<>(cols.size());
+      objInspectors = new ArrayList<>(cols.size());
 
-    for (Column c : cols) {
-      colNames.add(c.getName());
-      objInspectors.add(OmnitureSerDeUtils.toObjectInspector(c.getType()));
+      for (Column c : cols) {
+        colNames.add(c.getName());
+        objInspectors.add(OmnitureSerDeUtils.toObjectInspector(c.getType()));
+      }
+    } else {
+      String[] header =
+          tblProps.getProperty(METADATA_HEADER_KEY).split(DATAFILE_SEPARATOR);
+
+      colNames = new ArrayList<>(header.length);
+      objInspectors = new ArrayList<>(header.length);
+      cols = new ArrayList<>(header.length);
+
+      ColumnType[] types = ColumnType.values();
+      for (String s : header) {
+        String[] col = s.split(COLTYPE_SEPARATOR);
+        if (col.length != 2) {
+          throw new SerDeException("invalid header format");
+        }
+        colNames.add(col[0]);
+        objInspectors.add(OmnitureSerDeUtils.toObjectInspector(col[1]));
+        for (ColumnType t : types) {
+          if(t.name.equalsIgnoreCase(col[1])) {
+            cols.add(new Column(col[0], t));
+            break;
+          }
+        }
+      }
+      // lookup index is not supported in the manual mode
+      lookup = new LookupTableIndex();
     }
 
     inspector = ObjectInspectorFactory.getStandardStructObjectInspector(

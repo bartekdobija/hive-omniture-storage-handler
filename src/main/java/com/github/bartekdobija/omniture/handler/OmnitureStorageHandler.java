@@ -16,6 +16,7 @@ import org.apache.hadoop.util.StringUtils;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 
 import static org.apache.hadoop.mapreduce.lib.input.FileInputFormat.*;
 
@@ -26,6 +27,8 @@ public class OmnitureStorageHandler
   /* (optional) manual configuration */
   public static final String METADATA_HEADER_KEY = "omniture.metadata.header";
   public static final String LOOKUP_TABLE_KEY = "omniture.metadata.lookuptable";
+  public static final String LOOKUP_ENABLED_KEY =
+      "omniture.metadata.lookuptable.enabled";
   public static final String DATA_FILES_KEY = "omniture.data.files";
 
   public static final String DATAFILE_SEPARATOR = ",";
@@ -52,16 +55,22 @@ public class OmnitureStorageHandler
   }
 
   private void jobConfig(TableDesc tableDesc, Map<String, String> jobProps) {
-    try {
-      OmnitureMetadata metadata = new OmnitureMetadataFactory().create(
-          tableDesc.getProperties().getProperty(MANIFEST_FILE_KEY));
-      jobProps.put(INPUT_DIR, dataFiles(metadata));
-    } catch (MetadataException ex) {
-      ex.printStackTrace();
+    Properties props = tableDesc.getProperties();
+    String manifest = props.getProperty(MANIFEST_FILE_KEY);
+
+    if (manifest != null) {
+      try {
+        jobProps.put(INPUT_DIR,
+            dataFiles(new OmnitureMetadataFactory().create(manifest)));
+      } catch (MetadataException ex) {
+        ex.printStackTrace();
+      }
+    } else {
+      jobProps.put(INPUT_DIR, props.getProperty(DATA_FILES_KEY));
     }
   }
 
-  private String dataFiles(OmnitureMetadata meta) {
+  private String dataFiles(final OmnitureMetadata meta) {
     List<String> paths = new ArrayList<>();
     for(DataFile file: meta.getDataFiles()) {
       paths.add(file.getName());
