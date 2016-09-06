@@ -24,9 +24,10 @@ CREATE EXTERNAL TABLE omniture_table
 ROW FORMAT SERDE 'com.github.bartekdobija.omniture.serde.OmnitureSerDe'
 STORED BY 'com.github.bartekdobija.omniture.handler.OmnitureStorageHandler'
 TBLPROPERTIES (
-  "omniture.manifest.file" = 'file://omniture-logs/manifest.txt'
-  -- "omniture.manifest.file" = 'hdfs://namenode/omniture-logs/manifest.txt'
-  -- "omniture.manifest.file" = 's3://bucket/omniture-logs/manifest.txt'
+  "manifest.file" = 'file://omniture-logs/manifest.txt',
+  -- "manifest.file" = 'hdfs://namenode/omniture-logs/manifest.txt',
+  -- "manifest.file" = 's3://bucket/omniture-logs/manifest.txt',
+  "metadata.lookuptable.enabled" = 'true'
 );
 ```
 This first version does not implement partition handling.

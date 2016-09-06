@@ -23,13 +23,12 @@ import static org.apache.hadoop.mapreduce.lib.input.FileInputFormat.*;
 public class OmnitureStorageHandler
     extends DefaultStorageHandler implements HiveStoragePredicateHandler {
 
-  public static final String MANIFEST_FILE_KEY = "omniture.manifest.file";
+  public static final String MANIFEST_FILE_KEY = "manifest.file";
   /* (optional) manual configuration */
-  public static final String METADATA_HEADER_KEY = "omniture.metadata.header";
-  public static final String LOOKUP_TABLE_KEY = "omniture.metadata.lookuptable";
-  public static final String LOOKUP_ENABLED_KEY =
-      "omniture.metadata.lookuptable.enabled";
-  public static final String DATA_FILES_KEY = "omniture.data.files";
+  public static final String METADATA_HEADER_KEY = "metadata.header";
+  public static final String LOOKUP_TABLE_KEY = "metadata.lookuptable";
+  public static final String LOOKUP_ENABLED_KEY = "metadata.lookuptable.enabled";
+  public static final String DATA_FILES_KEY = "data.files";
 
   public static final String DATAFILE_SEPARATOR = ",";
   public static final String COLTYPE_SEPARATOR = ":";
