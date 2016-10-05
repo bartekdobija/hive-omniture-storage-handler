@@ -43,7 +43,7 @@
     <hive.version>1.2.1</hive.version>
     <hive.scope>provided</hive.scope>
 
-    <omnitureclick.version>0aa38b28c0</omnitureclick.version>
+    <omnitureclick.version>fb5ee85797</omnitureclick.version>
     <omnitureclick.scope>compile</omnitureclick.scope>
 
     <gson.version>2.7</gson.version>
